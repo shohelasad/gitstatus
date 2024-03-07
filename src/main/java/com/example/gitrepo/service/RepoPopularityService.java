@@ -18,12 +18,8 @@ public class RepoPopularityService {
     }
 
     public boolean isPopularRepository(String owner, String repo) {
-        RepoPopularity repository = fetchRepoPopularity( owner,  repo);
-        int score = repository.getStargazersCount() + repository.getForksCount() * 2;
+        RepoPopularity popularity = restTemplate.getForObject(githubApiUrl, RepoPopularity.class, owner, repo);
+        int score = popularity.getStargazersCount() + popularity.getForksCount() * 2;
         return score >= popularityScoreThreshold;
-    }
-
-    private RepoPopularity fetchRepoPopularity(String owner, String repo) {
-        return restTemplate.getForObject(githubApiUrl, RepoPopularity.class, owner, repo);
     }
 }
