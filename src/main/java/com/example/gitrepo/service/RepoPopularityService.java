@@ -7,8 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class RepoPopularityService {
-    @Value("${popularity.score.threshold}")
-    private int popularityScoreThreshold;
+    private static final int popularityScoreThreshold = 500;
     private final RestTemplate restTemplate;
     private final String githubApiUrl;
 

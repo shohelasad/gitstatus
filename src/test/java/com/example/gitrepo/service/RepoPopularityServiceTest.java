@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.client.RestTemplate;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -40,5 +41,21 @@ public class RepoPopularityServiceTest {
         verify(restTemplate, times(1)).
                 getForObject(anyString(), eq(RepoPopularity.class), anyString(), anyString());
         assertTrue(isPopular);
+    }
+
+    @Test
+    void testIsPopularRepositoryWhenNotPopular() {
+        String owner = "test-user";
+        String repo = "test-repo";
+        RepoPopularity popularity = new RepoPopularity();
+        popularity.setStargazersCount(10);
+        popularity.setForksCount(20);
+        when(restTemplate.getForObject(anyString(), eq(RepoPopularity.class), anyString(), anyString()))
+                .thenReturn(popularity);
+
+        boolean isPopular = repoPopularityService.isPopularRepository(owner, repo);
+        verify(restTemplate, times(1)).
+                getForObject(anyString(), eq(RepoPopularity.class), anyString(), anyString());
+        assertFalse(isPopular);
     }
 }
