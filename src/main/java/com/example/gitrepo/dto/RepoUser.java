@@ -1,0 +1,31 @@
+package com.example.gitrepo.dto;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+
+@Data
+public class RepoUser {
+    private String login;
+    private int id;
+    @JsonProperty("node_id")
+    private String nodeId;
+    @JsonProperty("avatar_url")
+    private String avatarUrl;
+    @JsonProperty("gravatar_id")
+    private String gravatarId;
+    private String url;
+    @JsonProperty("followers_url")
+    private String followersUrl;
+    @JsonProperty("following_url")
+    private String followingUrl;
+    @JsonProperty("gists_url")
+    private String starredUrl;
+    @JsonProperty("subscriptions_url")
+    private String subscriptionsUrl;
+    @JsonProperty("organizations_url")
+    private String organizationsUrl;
+    @JsonProperty("repos_url")
+    private String reposUrl;
+    @JsonProperty("starred_at")
+    private String starredAt;
+}
