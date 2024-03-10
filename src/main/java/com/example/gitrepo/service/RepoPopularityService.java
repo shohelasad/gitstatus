@@ -1,10 +1,12 @@
 package com.example.gitrepo.service;
 
-import com.example.gitrepo.dto.RepoPopularity;
+import com.example.gitrepo.dto.PopularityDto;
+import com.example.gitrepo.dto.RepoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 @Slf4j
@@ -25,29 +27,34 @@ public class RepoPopularityService {
         this.accessToken = accessToken;
     }
 
-    public boolean isPopularRepository(String owner, String repo) {
+    public PopularityDto getGithubRepoPopularity(String owner, String repo) {
         log.info("Fetching repository popularity info with owner: {}: repo: {}", owner, repo);
         try {
             HttpHeaders headers = createHeaders(accessToken);
             HttpEntity<Void> entity = new HttpEntity<>(headers);
 
-            ResponseEntity<RepoPopularity> response = restTemplate.exchange(
+            ResponseEntity<RepoDto> response = restTemplate.exchange(
                     githubApiUrl,
                     HttpMethod.GET,
                     entity,
-                    RepoPopularity.class,
+                    RepoDto.class,
                     owner,
                     repo
             );
 
             validateResponse(response);
-            RepoPopularity popularity = response.getBody();
+            RepoDto popularity = response.getBody();
             log.info("Fetching repository popularity info: {}", popularity);
             int score = calculatePopularityScore(popularity);
-            return score >= popularityScoreThreshold;
+            boolean popular = score >= popularityScoreThreshold;
+            PopularityDto popularityDto = new PopularityDto(owner, repo, score, popular);
+            return popularityDto;
+        } catch (ResourceAccessException e) {
+            log.error("Error checking repository popularity: {}", e.getMessage(), e);
+            throw new ResourceAccessException("Connection timeout exception!");
         } catch (Exception e) {
             log.error("Error checking repository popularity: {}", e.getMessage(), e);
-            return false;
+            throw new RuntimeException("Could not able to fetch repo info!");
         }
     }
 
@@ -59,7 +66,7 @@ public class RepoPopularityService {
         return headers;
     }
 
-    private void validateResponse(ResponseEntity<RepoPopularity> response) {
+    private void validateResponse(ResponseEntity<RepoDto> response) {
         if (!response.getStatusCode().equals(HttpStatus.OK)) {
             throw new IllegalStateException("GitHub API request failed with status: " + response.getStatusCode());
         }
@@ -68,7 +75,7 @@ public class RepoPopularityService {
         }
     }
 
-    private int calculatePopularityScore(RepoPopularity popularity) {
+    private int calculatePopularityScore(RepoDto popularity) {
         return popularity.getStargazersCount() + popularity.getForksCount() * 2;
     }
 }

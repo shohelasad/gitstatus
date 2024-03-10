@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RepoPopularity {
+public class RepoDto {
     private long id;
     @JsonProperty("node_id")
     private String nodeId;
@@ -16,7 +16,7 @@ public class RepoPopularity {
     @JsonProperty("full_name")
     private String fullName;
     private boolean isPrivate;
-    private RepoUser owner;
+    private RepoUserDto owner;
     private boolean fork;
     private String url;
     @JsonProperty("forks_url")
@@ -43,7 +43,7 @@ public class RepoPopularity {
     private int forksCount;
     private boolean disabled;
     private int forks;
-    private RepoUser organization;
+    private RepoUserDto organization;
     @JsonProperty("network_count")
     private int networkCount;
     @JsonProperty("subscribers_count")
