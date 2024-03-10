@@ -6,12 +6,8 @@
 
 ## Used Technologies
 * Spring Boot 3
-* Spring Data
 * Lombok
 * Actuator
-* Postgresql
-* Apache Kafka
-* Websocket
 
 ## How to run
 

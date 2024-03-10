@@ -33,7 +33,7 @@ public class RepoPopularityServiceTest {
     }
 
     @Test
-    void testIsPopularRepositoryWhenPopular() {
+    void testGetRepoPopularityWhenPopular() {
         String owner = "test-user";
         String repo = "test-repo";
         RepoDto popularity = new RepoDto();
@@ -51,7 +51,7 @@ public class RepoPopularityServiceTest {
     }
 
     @Test
-    void testIsPopularRepositoryWhenNotPopular() {
+    void testGetRepoPopularityWhenNotPopular() {
         String owner = "test-user";
         String repo = "test-repo";
         RepoDto popularity = new RepoDto();
