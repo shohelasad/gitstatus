@@ -17,20 +17,26 @@
 mvn clean install -DskipTests
 ```
 
-### Run Kafka with Zookeeper and Postgresql
+### Package application as a JAR file
+
+```sh
+mvn test
+```
+
+### Run with docker compose
 
 ```sh
 docker-compose up -d
 ```
 
-### Run Spring Boot application
-
-```sh
-mvn spring-boot:run
-```
-
-Or, run as Java -jar
+### Run as Java -jar
 
 ```sh
 java -jar target/githubrepo-0.0.1-SNAPSHOT.jar
 ```
+
+### Health status
+http://localhost:8080/actuator/health
+
+### Open api docs
+http://localhost:8080/swagger-ui/index.html
