@@ -47,14 +47,13 @@ public class RepoPopularityService {
             log.info("Fetching repository popularity info: {}", popularity);
             int score = calculatePopularityScore(popularity);
             boolean popular = score >= popularityScoreThreshold;
-            PopularityDto popularityDto = new PopularityDto(owner, repo, score, popular);
-            return popularityDto;
+            return new PopularityDto(owner, repo, score, popular);
         } catch (ResourceAccessException e) {
             log.error("Error checking repository popularity: {}", e.getMessage(), e);
             throw new ResourceAccessException("Connection timeout exception!");
         } catch (Exception e) {
             log.error("Error checking repository popularity: {}", e.getMessage(), e);
-            throw new RuntimeException("Could not able to fetch repo info!");
+            throw new IllegalStateException("Could not able to fetch repo info!");
         }
     }
 

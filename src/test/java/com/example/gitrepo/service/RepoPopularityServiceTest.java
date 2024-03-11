@@ -17,7 +17,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-public class RepoPopularityServiceTest {
+class RepoPopularityServiceTest {
     private RepoPopularityService repoPopularityService;
     @Mock
     private RestTemplate restTemplate;
@@ -74,7 +74,7 @@ public class RepoPopularityServiceTest {
     }
 
     @Test
-    public void testTimeoutException() throws Exception {
+    void testTimeoutException() throws Exception {
         String owner = "someOwner";
         String repo = "someRepo";
 

@@ -1,7 +1,7 @@
 ## Approach and Assumption
 
-* REST API Development: Implements a RESTful API for your application.
-* OpenAPI Documentation: Integrates OpenAPI documentation for API exploration.
+* REST API Development: This Spring Boot Maven project is initialized with REST API, OpenAPI, and Actuator functionality.
+* OpenAPI Documentation: Integrates OpenAPI documentation in controller for API exploration.
 * Spring Boot Actuator: Exposes health and monitoring endpoints for application management.
 * Configurable Properties: Leverages properties files (e.g., config.properties) to configure:
 * Request Timeout: Set the maximum time (in milliseconds) a REST client waits for a response before timing out.
@@ -9,10 +9,7 @@
 * Popularity Score Threshold: Define the minimum score required for a repository to be considered popular.
 * REST Client Configuration: Utilizes RestTemplate as the REST client with configurable timeout and connection pool size.
 * Secure Access Token: Stores the access token for authentication in a properties file and sends it as an "Authorization" header with REST client requests.
-* Production Readiness:
-Dockerfile: Provides a Dockerfile for containerization, enabling easy deployment and scaling.
-Docker Compose (Optional): Includes instructions on using a Docker Compose file to run your service alongside other services in a multi-container environment.
-
+* Production Readiness: Dockerfile and Docker Compose configurations are included to ensure production readiness and scalability for integration with other services.
 
 ## Prerequisites
 
