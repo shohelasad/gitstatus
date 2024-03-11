@@ -23,7 +23,6 @@ class RepoPopularityControllerTest {
     @MockBean
     private RepoPopularityService repoPopularityService;
 
-
     @Test
     void testGetRepoPopularity() throws Exception {
         String owner = "test-user";

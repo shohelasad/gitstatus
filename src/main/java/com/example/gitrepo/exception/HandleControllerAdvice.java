@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class HandleControllerAdvice extends RuntimeException {
 
     @ExceptionHandler(ResourceAccessException.class)
-    public ResponseEntity<ErrorMessages> resourceAccessFoundException(ResourceAccessException ex, WebRequest request) {
+    public ResponseEntity<ErrorMessages> resourceAccessException(ResourceAccessException ex, WebRequest request) {
         ErrorMessages errorMessage = ErrorMessages.builder()
                 .statusCode(HttpStatus.REQUEST_TIMEOUT.value())
                 .timestamp(LocalDateTime.now())
@@ -22,13 +22,13 @@ public class HandleControllerAdvice extends RuntimeException {
                 .description( request.getDescription(false))
                 .build();
 
-        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorMessage, HttpStatus.REQUEST_TIMEOUT);
     }
 
     @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<ErrorMessages> handleIllegalStateException(IllegalStateException ex, WebRequest request) {
+    public ResponseEntity<ErrorMessages> resourceNotFoundException(IllegalStateException ex, WebRequest request) {
         ErrorMessages errorMessage = ErrorMessages.builder()
-                .statusCode(HttpStatus.NO_CONTENT.value())
+                .statusCode(HttpStatus.NOT_FOUND.value())
                 .timestamp(LocalDateTime.now())
                 .message(ex.getMessage())
                 .description(request.getDescription(false))
@@ -41,7 +41,7 @@ public class HandleControllerAdvice extends RuntimeException {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessages> globalExceptionHandler(Exception ex, WebRequest request) {
         ErrorMessages errorMessage = ErrorMessages.builder()
-                .statusCode(HttpStatus.NOT_FOUND.value())
+                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .timestamp(LocalDateTime.now())
                 .message(ex.getMessage())
                 .description( request.getDescription(false))
